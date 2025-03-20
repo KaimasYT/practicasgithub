@@ -11,6 +11,9 @@ jobs:
             - name: Clonar el repositorio 
               uses: actions/checkout@v4
 
+            - name: Configurar Permisos
+              run: chmod +x scripts/*.sh
+
             - name: ejecutar s1
               run: ./scripts/script1.sh 
 
