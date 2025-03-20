@@ -8,6 +8,9 @@ jobs:
     ejecutar-scripts-de-la-carpeta:
         runs-on: ubuntu-latest
         steps:
+            - name: Clonar el repositorio 
+              uses: actions/checkout@v4
+              
             - name:
               run: practicasgithub/scripts/script1.sh 
 
