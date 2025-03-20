@@ -9,10 +9,10 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name:
-              run: ./scripts/script1.sh
+              run: practicasgithub/scripts/script1.sh 
 
             - name:
-              run: ./scripts/script2.sh
+              run: practicasgithub/scripts/script2.sh
 
             - name:
-              run: ./scripts/script3.sh
+              run: practicasgithub/scripts/script3.sh
