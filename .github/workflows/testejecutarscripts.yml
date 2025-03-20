@@ -1,0 +1,18 @@
+name: Ejecutar Scripts de la carpeta scripts
+
+on:
+    push:
+    workflow_dispatch:
+
+jobs:
+    ejecutar-scripts-de-la-carpeta:
+        runs-on: ubuntu-latest
+        steps:
+            - name:
+              run: ./scripts/script1.sh
+
+            - name:
+              run: ./scripts/script2.sh
+
+            - name:
+              run: ./scripts/script3.sh
