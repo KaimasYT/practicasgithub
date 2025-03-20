@@ -10,12 +10,12 @@ jobs:
         steps:
             - name: Clonar el repositorio 
               uses: actions/checkout@v4
-              
-            - name:
-              run: practicasgithub/scripts/script1.sh 
 
-            - name:
-              run: practicasgithub/scripts/script2.sh
+            - name: ejecutar s1
+              run: ./scripts/script1.sh 
 
-            - name:
-              run: practicasgithub/scripts/script3.sh
+            - name: ejecutar s2
+              run: ./scripts/script2.sh
+
+            - name: ejecutar s3
+              run: ./scripts/script3.sh
