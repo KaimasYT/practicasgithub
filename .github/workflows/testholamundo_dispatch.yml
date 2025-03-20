@@ -1,0 +1,10 @@
+name : testholamundodispatch
+on:
+    workflow_dispatch
+
+jobs:
+    ejemplo-job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Hola mundo Manual
+              run: echo "Hola mundo ejecutado manualmente"

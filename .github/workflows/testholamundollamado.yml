@@ -1,0 +1,12 @@
+name: testholamundollamado
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ejemplo-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hola Mundo desde workflow secundario llamado
+        run: echo "Workflow activado por un push en la rama main"
