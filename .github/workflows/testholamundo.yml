@@ -1,0 +1,9 @@
+name: testholamundo
+on: [push]
+
+jobs:
+  ejemplo-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Imprimir Hola Mundo
+        run: echo "Hola mundo"
