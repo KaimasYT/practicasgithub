@@ -1,5 +1,5 @@
 FROM alpine:latest
 
-run apk add bash curl
+RUN apk add --no-cache bash curl
 
-run echo "Ejecutando tests"
+RUN echo "Ejecutando tests"
