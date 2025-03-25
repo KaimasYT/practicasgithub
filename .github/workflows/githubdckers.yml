@@ -1,20 +1,20 @@
 name: Docker con workflow
 
 on:
-    workflow_dispatch:
+   workflow_dispatch:
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-        - name: Checkout
-          uses: actions/checkout@v4
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
 
-        - name: Usar Action
-          uses: ./
+    - name: Usar Action
+      uses: ./
 
-        - name: Build
-          uses: echo "Building..."
+    - name: Build
+      uses: echo "Building..."
 
-        - name: Test
-          uses: echo "Tested"
+    - name: Test
+      uses: echo "Tested"
