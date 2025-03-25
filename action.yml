@@ -1,0 +1,6 @@
+name: "Usar el docker file"
+description: "Usar el dockerfile"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
