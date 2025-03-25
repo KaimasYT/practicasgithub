@@ -1,7 +1,7 @@
 name: Docker con workflow
 
 on:
-   push:
+  push:
 
 jobs:
   build:
@@ -14,7 +14,7 @@ jobs:
       uses: ./actiondocker
 
     - name: Build
-      uses: echo "Building..."
+      run: echo "Building..."
 
     - name: Test
-      uses: echo "Tested"
+      run: echo "Tested"
