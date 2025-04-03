@@ -1,0 +1,111 @@
+name: "Bad Pipeline"
+on:  
+  push:
+    branches:
+       - main
+  workflow_dispatch:
+
+jobs:  
+  build:    
+    runs-on: ubuntu-latest    
+    steps:
+      - name: Checkout código        
+        uses: actions/checkout@v3
+      
+      - name: Instalar dependencias y CLI
+        run: |
+          echo "Instalando hackaton cli y dependencias"
+          sudo apt update          
+          sudo apt install -y hackaton          
+          hackaton install
+
+      - name: Configuraciones necesarias
+        run: |    
+          echo "Aplicando configuraciones necesarias"
+          sudo apt-get update -y
+          sudo apt-get install -y nginx curl
+          sudo systemctl enable nginx
+          sudo systemctl start nginx
+          sudo ufw allow 'Nginx Full'
+          sudo ufw enable
+          
+          sudo systemctl stop apache2
+          sudo systemctl disable apache2
+          
+          sudo rm -rf /var/www/html/*
+          sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/backup
+          sudo sed -i 's/root \/var\/www\/html;/root \/var\/www\/app;/' /etc/nginx/sites-available/default
+          
+          sudo mkdir -p /var/www/app                            
+          sudo chown -R www-data:www-data /var/www/app
+          sudo chmod -R 755 /var/www/app
+          
+          sudo systemctl restart nginx
+
+      - name: Construccion de Aplicación
+        run: | 
+          echo "Construyendo aplicación..."
+          hackaton run build
+
+      - name: Test de Aplicación
+        run: |
+          echo "Probando aplicación"
+          hackaton test
+
+      - name: Guardar Artefacto
+        uses: actions/upload-artifact@v3
+        with:
+          name: hack-build
+          path: ./build/ 
+
+
+  deploy-dev:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - name: Descargar Artefacto
+        uses: actions/download-artifact@v3
+        with:
+          name: hack-build
+          path: ./build/
+
+      - name: Declarar variables de entorno
+        run: |      
+          echo "DB_USER=${{ secrets.DB_USER_DEV }}" >> $GITHUB_ENV
+          echo "DB_PASS=${{ secrets.DB_PASS_DEV }}" >> $GITHUB_ENV
+          echo "API_KEY=${{ secrets.API_KEY_DEV }}" >> $GITHUB_ENV
+
+      - name: Despliegue en desarrollo
+        run: |
+          echo "Desplegando aplicación en DEV..."
+          hackaton deploy --DEV
+          hackaton restart app --DEV
+      
+  deploy-prod:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Descargar Artefacto
+        uses: actions/download-artifact@v3
+        with:
+          name: hack-build
+          path: ./build/   
+
+      - name: Declarar variables de entorno
+        run: |      
+          echo "DB_USER=${{ secrets.DB_USER_DEV }}" >> $GITHUB_ENV
+          echo "DB_PASS=${{ secrets.DB_PASS_DEV }}" >> $GITHUB_ENV
+          echo "API_KEY=${{ secrets.API_KEY_DEV }}" >> $GITHUB_ENV
+          echo "Desplegando aplicación en PROD..."
+
+      - name: Desplegar en Producción
+        run: |          
+          hackaton deploy --PROD
+          hackaton restart app --PROD
+
+      - name: Exito
+        run: |
+          echo "🚀 Despliegue completado en desarrollo y producción"
+ 
