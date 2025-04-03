@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest    
     steps:
       - name: Checkout código        
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
       
       - name: Instalar dependencias y CLI
         run: |
@@ -53,7 +53,7 @@ jobs:
           hackaton test
 
       - name: Guardar Artefacto
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: hack-build
           path: ./build/ 
@@ -65,7 +65,7 @@ jobs:
     environment: development
     steps:
       - name: Descargar Artefacto
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v2
         with:
           name: hack-build
           path: ./build/
